@@ -1,0 +1,15 @@
+{
+  "originHash" : "b2f1ca1e357e156dd53425812955464626dc74ceeee86d83ec7ba45f7f925c18",
+  "pins" : [
+    {
+      "identity" : "tocropviewcontroller",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/TimOliver/ToCropViewController",
+      "state" : {
+        "revision" : "a634cb7cdfd580006e79a6e74e64417fe9e9783b",
+        "version" : "2.7.4"
+      }
+    }
+  ],
+  "version" : 3
+}
