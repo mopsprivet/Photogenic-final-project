@@ -47,12 +47,12 @@ extension AlertManager {
     }
     
     
-    public static func showSignInAlert(on vc: UIViewController, with error: Error) {
+    public static func showSignInErrorAlert(on vc: UIViewController, with error: Error) {
         self.showBasicAlert(on: vc, with: "Sign In Error", and: "\(error.localizedDescription)")
     }
 }
 
-//logout eerors
+//logout errors
 extension AlertManager {
     
     public static func showLogoutErrorAlert(on vc: UIViewController, with error: Error) {

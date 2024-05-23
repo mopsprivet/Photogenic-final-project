@@ -1,5 +1,4 @@
-# Uncomment the next line to define a global platform for your project
-# platform :ios, '17.5'
+platform :ios, '17.5'
 
 target 'Lab_5' do
   use_frameworks!

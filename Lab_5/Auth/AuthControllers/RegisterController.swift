@@ -1,4 +1,5 @@
 import UIKit
+import FirebaseAuth
 
 class RegisterController: UIViewController {
     
@@ -107,14 +108,57 @@ class RegisterController: UIViewController {
             self.signInButton.heightAnchor.constraint(equalToConstant: 44),
             self.signInButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.80)
         ])
+        
+        let usernamePlaceholderAttributes: [NSAttributedString.Key: Any] = [
+                .foregroundColor: UIColor.gray
+            ]
+        usernameField.attributedPlaceholder = NSAttributedString(string: "Username", attributes: usernamePlaceholderAttributes)
+        
+        let emailPlaceholderAttributes: [NSAttributedString.Key: Any] = [
+                .foregroundColor: UIColor.gray
+            ]
+        emailField.attributedPlaceholder = NSAttributedString(string: "Email", attributes: emailPlaceholderAttributes)
+        
+        let passwordPlaceholderAttributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.gray
+        ]
+        passwordField.attributedPlaceholder = NSAttributedString(string: "Password", attributes: passwordPlaceholderAttributes)
 }
             
-            // MARK: - Selectors
     @objc private func didTapSignUp() {
         print("DEBUG PRINT:", "didTapSignUp")
 //        let vc = AuthenticationViewController()
 //        vc.modalPresentationStyle = .fullScreen
 //        self.present(vc, animated: false, completion: nil)
+        
+        let registerUserRequest = RegiserUserRequest(username: self.usernameField.text ?? "", email: self.emailField.text ?? "", password: self.passwordField.text ?? "")
+        
+        if !ValidationCheck.isValidUsername(registerUserRequest.username) {
+            AlertManager.showInvalidUsernameAlert(on: self)
+            return
+        }
+                
+        if !ValidationCheck.isValidEmail(registerUserRequest.email) {
+            AlertManager.showInvalidEmailAlert(on: self)
+            return
+        }
+        
+        AuthService.shared.registerUser(with: registerUserRequest) { [weak self] wasRegistered, error in
+            guard let self = self else { return }
+            
+            if let error = error {
+                AlertManager.showRegistrationErrorAlert(on: self, with: error)
+                return
+            }
+            
+            if wasRegistered {
+                if let sceneDelegate = self.view.window?.windowScene?.delegate as? SceneDelegate {
+                    sceneDelegate.checkAuthentication()
+                }
+            } else {
+                AlertManager.showRegistrationErrorAlert(on: self)
+            }
+        }
     }
     
     @objc private func didTapSignIn() {
@@ -126,7 +170,8 @@ class RegisterController: UIViewController {
 
 extension RegisterController: UITextViewDelegate {
     
-    private func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextInteraction) -> Bool {
+    
+    func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextInteraction) -> Bool {
         
         if URL.scheme == "terms" {
             self.showWebViewerController(with: "https://policies.google.com/terms/update?hl=en")

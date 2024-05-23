@@ -16,7 +16,18 @@ class AuthenticationViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         
-        self.label.text = "mopsprivet\nsitchenko.aa@gmail.com"
+        //self.label.text = "mopsprivet\nsitchenko.aa@gmail.com"
+        AuthService.shared.fetchUser { [weak self] user, error in
+            guard let self = self else { return }
+            if let error = error {
+                AlertManager.showFetchingUserErrorAlert(on: self, with: error)
+                return
+            }
+            
+            if let user = user {
+                self.label.text = "\(user.username)\n\(user.email)"
+            }
+        }
         
     }
     
@@ -36,7 +47,17 @@ class AuthenticationViewController: UIViewController {
     }
     
     @objc private func didTapLogout() {
+    AuthService.shared.signOut { [weak self] error in
+        guard let self = self else { return }
+        if let error = error {
+            AlertManager.showLogoutErrorAlert(on: self, with: error)
+            return
+        }
         
+        if let sceneDelegate = self.view.window?.windowScene?.delegate as? SceneDelegate {
+            sceneDelegate.checkAuthentication()
+        }
+    }
     }
     
 }

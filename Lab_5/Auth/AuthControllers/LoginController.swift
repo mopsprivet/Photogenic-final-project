@@ -93,24 +93,45 @@ class LoginController: UIViewController {
         passwordField.attributedPlaceholder = NSAttributedString(string: "Password", attributes: passwordPlaceholderAttributes)
 }
             
-            @objc private func didTapSignIn() {
-                print("DEBUG PRINT:", "didTapSignIn")
-                let vc = CropImageViewController()
-                let nav = UINavigationController(rootViewController: vc)
-                nav.modalPresentationStyle = .fullScreen
-                self.present(nav, animated: false, completion: nil)
+    @objc private func didTapSignIn() {
+        print("DEBUG PRINT:", "didTapSignIn")
+//              let vc = AuthenticationViewController()
+//              let nav = UINavigationController(rootViewController: vc)
+//              nav.modalPresentationStyle = .fullScreen
+//              self.present(nav, animated: false, completion: nil)
+        
+        let loginRequest = LoginUserRequest(
+                    email: self.emailField.text ?? "",
+                    password: self.passwordField.text ?? ""
+                )
+                
+        if !ValidationCheck.isValidEmail(loginRequest.email) {
+            AlertManager.showInvalidEmailAlert(on: self)
+            return
+        }
+        
+        
+        AuthService.shared.signIn(with: loginRequest) { error in
+            if let error = error {
+                AlertManager.showSignInErrorAlert(on: self, with: error)
+                return
             }
             
-            @objc private func didTapNewUser() {
-                print("DEBUG PRINT:", "didTapNewUser")
-                let vc = RegisterController()
-                self.navigationController?.pushViewController(vc, animated: true)
+            if let sceneDelegate = self.view.window?.windowScene?.delegate as? SceneDelegate {
+                sceneDelegate.checkAuthentication()
             }
-            
-            @objc private func didTapForgotPassword() {
-                print("DEBUG PRINT:", "didTapForgotPassword")
-                let vc = ForgotPasswordController()
-                self.navigationController?.pushViewController(vc, animated: true)
-
-            }
+        }
+    }
+    
+    @objc private func didTapNewUser() {
+        print("DEBUG PRINT:", "didTapNewUser")
+        let vc = RegisterController()
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @objc private func didTapForgotPassword() {
+        print("DEBUG PRINT:", "didTapForgotPassword")
+        let vc = ForgotPasswordController()
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
 }
