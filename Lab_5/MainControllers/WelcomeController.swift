@@ -1,7 +1,7 @@
 import UIKit
 
 
-class ViewController: UIViewController {
+class WelcomeController: UIViewController {
 
     var messageToSend: String = "Welcome!"
 
@@ -12,7 +12,7 @@ class ViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "SegueIdentifier1" { // Replace with your actual segue identifier
+        if segue.identifier == "SegueIdentifier1" {
             if let destination = segue.destination as? ViewController2 {
                 destination.receivedMessage = messageToSend
             }
@@ -21,7 +21,6 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
     }
 }
 

@@ -16,19 +16,44 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="lBl-oN-tfB">
-                                <rect key="frame" x="122" y="358" width="149" height="136"/>
+                                <rect key="frame" x="122" y="315" width="149" height="136"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="136" id="3rg-tS-KCR"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="149" id="Ch7-SI-3Wy"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="136" id="HdB-a1-PLW"/>
+                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="136" id="Hky-Q5-SvO"/>
                                     <constraint firstAttribute="width" constant="149" id="MtA-w1-FLQ"/>
+                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="136" id="QBn-wq-B62"/>
+                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="149" id="SCW-Fg-YPz"/>
+                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="136" id="VJn-R7-e94"/>
+                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="149" id="YxI-oy-fZs"/>
+                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="149" id="Z2h-8s-2QB"/>
+                                    <constraint firstAttribute="width" secondItem="lBl-oN-tfB" secondAttribute="height" multiplier="149:136" id="a2i-Go-5gj"/>
                                 </constraints>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Photogenic" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zYn-fg-yEH">
+                                <rect key="frame" x="70.666666666666686" y="459" width="252" height="78"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="78" id="BN9-Jw-vmF"/>
+                                    <constraint firstAttribute="height" constant="78" id="Gtr-7x-Rkq"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="252" id="Igq-e5-dCy"/>
+                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="78" id="IvP-K4-Yj7"/>
+                                    <constraint firstAttribute="width" constant="252" id="W9j-oK-sKf"/>
+                                    <constraint firstAttribute="width" secondItem="zYn-fg-yEH" secondAttribute="height" multiplier="42:13" id="cXa-A4-haJ"/>
+                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="252" id="wtt-aY-FSA"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="MyanmarSangamMN" family="Myanmar Sangam MN" pointSize="31"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" red="0.12738141150000001" green="0.13536942399999999" blue="0.18637242270000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
-                            <constraint firstItem="lBl-oN-tfB" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="Bga-6r-XBD"/>
-                            <constraint firstItem="lBl-oN-tfB" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="qer-Dv-mBL"/>
-                            <constraint firstItem="lBl-oN-tfB" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="qgP-7f-zAq"/>
+                            <constraint firstItem="lBl-oN-tfB" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="256" id="2Iv-h5-p8U"/>
+                            <constraint firstItem="lBl-oN-tfB" firstAttribute="centerX" secondItem="zYn-fg-yEH" secondAttribute="centerX" id="5FY-mH-a0t"/>
+                            <constraint firstItem="zYn-fg-yEH" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="PZY-fN-Zw4"/>
+                            <constraint firstItem="zYn-fg-yEH" firstAttribute="top" secondItem="lBl-oN-tfB" secondAttribute="bottom" constant="8" symbolic="YES" id="iMp-hk-zzi"/>
                         </constraints>
                     </view>
                 </viewController>

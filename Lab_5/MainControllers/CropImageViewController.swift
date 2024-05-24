@@ -9,6 +9,9 @@ class CropImageViewController: UIViewController, UIImagePickerControllerDelegate
     private let selectGalleryPhotoButton = CustomButton(title: "Gallery", fontSize: .med)
     private let selectSearchPhotoButton = CustomButton(title: "Search Photo", fontSize: .med)
     
+    let saveImageButton = UIButton()
+    let homeButton = UIButton()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,7 +24,8 @@ class CropImageViewController: UIViewController, UIImagePickerControllerDelegate
     
     private func setupUI() {
         self.view.backgroundColor = #colorLiteral(red: 0.1255135536, green: 0.135696739, blue: 0.1907175183, alpha: 1)
-        self.view.addSubview(headerView) 
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(didTapLogout)) 
+        self.view.addSubview(headerView)
         self.view.addSubview(selectGalleryPhotoButton)
         self.view.addSubview(selectSearchPhotoButton)
         
@@ -105,23 +109,39 @@ class CropImageViewController: UIViewController, UIImagePickerControllerDelegate
             imageView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20) 
         ])
         
-        //saveImage(image) раскомментить потом, Это для сохранения картинок в библиотеку изображений
+        saveImage(image) //раскомментить потом, Это для сохранения картинок в библиотеку изображений
         
-        let backButton = UIButton()
-        backButton.setTitle("Back", for: .normal)
-        backButton.titleLabel?.font = UIFont.systemFont(ofSize: 20)
-        backButton.setTitleColor(.systemBlue, for: .normal)
-        backButton.backgroundColor = .systemGray.withAlphaComponent(0.2)
-        backButton.layer.cornerRadius = 12
-        backButton.addTarget(self, action: #selector(didTapBackToMain), for: .touchUpInside)
-        backButton.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(backButton)
+        saveImageButton.setTitle("Save Image", for: .normal)
+        saveImageButton.titleLabel?.font = UIFont.systemFont(ofSize: 20)
+        saveImageButton.setTitleColor(.systemBlue, for: .normal)
+        saveImageButton.backgroundColor = .systemGray.withAlphaComponent(0.2)
+        saveImageButton.layer.cornerRadius = 12
+        saveImageButton.addTarget(self, action: #selector(didTapSaveImage), for: .touchUpInside)
+        saveImageButton.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(saveImageButton)
 
         NSLayoutConstraint.activate([
-            backButton.centerXAnchor.constraint(equalTo: imageView.centerXAnchor),
-            backButton.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: -100),
-            backButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.50),
-            backButton.heightAnchor.constraint(equalToConstant: 40)
+            saveImageButton.centerXAnchor.constraint(equalTo: imageView.centerXAnchor),
+            saveImageButton.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: -100),
+            saveImageButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.50),
+            saveImageButton.heightAnchor.constraint(equalToConstant: 40)
+        ])
+        
+        homeButton.setTitle("Home", for: .normal)
+        homeButton.titleLabel?.font = UIFont.systemFont(ofSize: 20)
+        homeButton.setTitleColor(.systemBlue, for: .normal)
+        homeButton.backgroundColor = .systemGray.withAlphaComponent(0.2)
+        homeButton.layer.cornerRadius = 12
+        homeButton.addTarget(self, action: #selector(didTapHome), for: .touchUpInside)
+        homeButton.translatesAutoresizingMaskIntoConstraints = false
+        homeButton.isHidden = true
+        view.addSubview(homeButton)
+
+        NSLayoutConstraint.activate([
+            homeButton.centerXAnchor.constraint(equalTo: imageView.centerXAnchor),
+            homeButton.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: -100),
+            homeButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.50),
+            homeButton.heightAnchor.constraint(equalToConstant: 40)
         ])
     }
     
@@ -152,12 +172,33 @@ class CropImageViewController: UIViewController, UIImagePickerControllerDelegate
         }
     }
     
-    @objc private func didTapBackToMain() {
-        print("DEBUG PRINT:", "didTapBackToMain")
+    @objc private func didTapSaveImage() {
+        print("DEBUG PRINT:", "didTapDone")
+        AlertManager.showSuccessAlert(on: self)
+        saveImageButton.isHidden = true
+        homeButton.isHidden = false
+    }
+    
+    @objc private func didTapHome() {
         let vc = CropImageViewController()
         self.navigationController?.pushViewController(vc, animated: true) 
     }
     
-}
+    
+    @objc private func didTapLogout() {
+        AuthService.shared.signOut { [weak self] error in
+            guard let self = self else { return }
+            if let error = error {
+                AlertManager.showLogoutErrorAlert(on: self, with: error)
+                return
+            }
+            
+            if let sceneDelegate = self.view.window?.windowScene?.delegate as? SceneDelegate {
+                sceneDelegate.checkAuthentication()
+            }
+        }
+    }
+    
+} 
 
 

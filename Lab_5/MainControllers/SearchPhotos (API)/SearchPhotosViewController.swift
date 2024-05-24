@@ -28,6 +28,7 @@ class SearchPhotoViewController: UIViewController, UICollectionViewDataSource, U
 
     override func viewDidLoad() {
         self.view.backgroundColor = #colorLiteral(red: 0.1255135536, green: 0.135696739, blue: 0.1907175183, alpha: 1)
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(didTapLogout)) 
 
         super.viewDidLoad()
         searchbar.delegate = self
@@ -112,5 +113,19 @@ class SearchPhotoViewController: UIViewController, UICollectionViewDataSource, U
         }
         cell.configure(with: imageURLString)
         return cell
+    }
+    
+    @objc private func didTapLogout() {
+        AuthService.shared.signOut { [weak self] error in
+            guard let self = self else { return }
+            if let error = error {
+                AlertManager.showLogoutErrorAlert(on: self, with: error)
+                return
+            }
+            
+            if let sceneDelegate = self.view.window?.windowScene?.delegate as? SceneDelegate {
+                sceneDelegate.checkAuthentication()
+            }
+        }
     }
 }

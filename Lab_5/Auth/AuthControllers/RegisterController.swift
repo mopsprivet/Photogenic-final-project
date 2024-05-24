@@ -175,6 +175,7 @@ extension RegisterController: UITextViewDelegate {
         
         if URL.scheme == "terms" {
             self.showWebViewerController(with: "https://policies.google.com/terms/update?hl=en")
+            
         }
         else if URL.scheme == "privacy" {
             self.showWebViewerController(with: "https://policies.google.com/privacy?hl=en")

@@ -5,7 +5,7 @@ class AlertManager {
     private static func showBasicAlert(on vc: UIViewController, with title: String, and message: String?) {
         DispatchQueue.main.async {
             let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             vc.present(alert, animated: true)
         }
     }
@@ -81,6 +81,14 @@ extension AlertManager {
     
     public static func showUnknownFetchingUserAlert(on vc: UIViewController) {
         self.showBasicAlert(on: vc, with: "Unknown Fetching User", and: nil)
+    }
+}
+
+
+extension AlertManager {
+    
+    public static func showSuccessAlert(on vc: UIViewController) {
+        self.showBasicAlert(on: vc, with: "Successfully saved!", and: "Your image has been successfully saved to the gallery.")
     }
 }
 

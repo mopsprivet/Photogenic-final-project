@@ -22,7 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             if Auth.auth().currentUser == nil {
                 self.goToController(with: LoginController())
             } else {
-                self.goToController(with: AuthenticationViewController())
+                self.goToController(with: CropImageViewController())
             }
         }
         

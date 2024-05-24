@@ -47,17 +47,17 @@ class AuthenticationViewController: UIViewController {
     }
     
     @objc private func didTapLogout() {
-    AuthService.shared.signOut { [weak self] error in
-        guard let self = self else { return }
-        if let error = error {
-            AlertManager.showLogoutErrorAlert(on: self, with: error)
-            return
+        AuthService.shared.signOut { [weak self] error in
+            guard let self = self else { return }
+            if let error = error {
+                AlertManager.showLogoutErrorAlert(on: self, with: error)
+                return
+            }
+            
+            if let sceneDelegate = self.view.window?.windowScene?.delegate as? SceneDelegate {
+                sceneDelegate.checkAuthentication()
+            }
         }
-        
-        if let sceneDelegate = self.view.window?.windowScene?.delegate as? SceneDelegate {
-            sceneDelegate.checkAuthentication()
-        }
-    }
     }
     
 }
